@@ -6,16 +6,15 @@
  * @flow
  */
 
-import React, {Fragment} from 'react';
-import { AppRegistry, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { 
+  StyleSheet, 
+  Text, 
+  TouchableOpacity, 
+  View,
+  Alert
+ } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
 import { RNCamera } from 'react-native-camera';
 
@@ -31,14 +30,14 @@ export default class App extends React.Component {
           type={RNCamera.Constants.Type.back}
           flashMode={RNCamera.Constants.FlashMode.on}
           androidCameraPermissionOptions={{
-            title: 'Permission to use camera',
-            message: 'We need your permission to use your camera',
+            title: 'Permissão para usar a camera',
+            message: 'Nós precisamos da sua permissão para usar a sua camera',
             buttonPositive: 'Ok',
             buttonNegative: 'Cancel',
           }}
           androidRecordAudioPermissionOptions={{
-            title: 'Permission to use audio recording',
-            message: 'We need your permission to use your audio',
+            title: 'Permissão para gravar áudio',
+            message: 'Nós precisamos da sua permissão para gravar o seu áudio',
             buttonPositive: 'Ok',
             buttonNegative: 'Cancel',
           }}
@@ -60,6 +59,7 @@ export default class App extends React.Component {
       const options = { quality: 0.5, base64: true };
       const data = await this.camera.takePictureAsync(options);
       console.log(data.uri);
+      Alert.alert('Salvou', data.uri)
     }
   }
 }
