@@ -2,10 +2,10 @@ import React from 'react'
 import {Dimensions, View} from 'react-native'
 import Svg, {Circle, Defs, Rect, Mask} from 'react-native-svg'
 
-const CameraOverlayC = () => {
+const CameraMask = () => {
     const height = Dimensions.get('window').height
     const width = Dimensions.get('window').width
-    const circleRadius = width / 2.5
+    const circleRadius = width / 2.2
     const viewBox = `0 0 ${width} ${height}`
 
     return (
@@ -29,4 +29,4 @@ const CameraOverlayC = () => {
     )
 }
 
-export default CameraOverlayC
+export default CameraMask

@@ -1,15 +1,14 @@
 import React from 'react'
 import {
-    CameraRoll,
     Dimensions, 
     StyleSheet, 
-    View, 
-    Image, 
-    Text, 
-    TouchableOpacity
+    View,
+    TouchableOpacity,
+    ToastAndroid,
 } from 'react-native'
 import {RNCamera} from 'react-native-camera'
-import CameraOverlayC from './CameraOverlayC'
+import CameraRoll from "@react-native-community/cameraroll";
+import CameraMask from './CameraMask'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 export default class AppC extends React.Component {
@@ -20,11 +19,11 @@ export default class AppC extends React.Component {
                     style={styles.camera}
                     ref={ref => {this.camera = ref;}}
                     type={RNCamera.Constants.Type.back} />
-                <CameraOverlayC />
+                <CameraMask />
                 <View style={styles.cameraElements}>
                     <View style={{alignItems: 'center'}}>
                         <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.buttom}>
-                            <Icon name="camera" size={40} color='#342' />                
+                            <Icon name="camera" size={40} color='#fff' />                
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -32,16 +31,16 @@ export default class AppC extends React.Component {
         )
     }
 
-    takePicture = async() => {
-        // if (this.camera) {
-        //   const options = { quality: 0.5, base64: true }
-        //   const data = await this.camera.takePictureAsync(options).then(data => {
-        //     CameraRoll.saveToCameraRoll(data.uri)
-        //     console.log(data)
-        //   })
-        //   console.log(data.uri)
-        // }
-      }
+    takePicture = async function() {
+        if (this.camera) {
+            const data = await this.camera.takePictureAsync().then(data => {
+                ToastAndroid.show('Imagem salva na galeria', ToastAndroid.SHORT);
+                console.disableYellowBox = true;
+                CameraRoll.saveToCameraRoll(data.uri, 'photo');
+            });
+            console.log(data.uri);
+        }
+    };
 }
 
 const styles = StyleSheet.create({
@@ -73,6 +72,6 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         padding: 10,
         borderRadius: 10,
-        backgroundColor: '#5d4'
+        backgroundColor: '#000'
     },
 })
