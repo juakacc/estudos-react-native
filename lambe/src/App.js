@@ -5,7 +5,7 @@ import Navigator from './Navigator'
 import {setMessage} from './store/actions/message'
 
 class App extends Component {
-    componentDidMount = () => {
+    componentDidUpdate = () => {
         if (this.props.text && this.props.text.toString().trim()) {
             Alert.alert(this.props.title || 'Mensagem', this.props.text.toString())
             this.props.clearMessage()

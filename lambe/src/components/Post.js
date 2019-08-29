@@ -22,7 +22,8 @@ class Post extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        paddingTop: 5
     },
     image: {
         width: Dimensions.get('window').width,

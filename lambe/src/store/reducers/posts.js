@@ -5,12 +5,12 @@ import {
     POST_CREATED
 } from '../actions/actionTypes'
 
-const initialSate = {
+const initialState = {
     posts: [],
     isUploading: false,
 }
 
-const reducer = (state = initialSate, action) => {
+const reducer = (state = initialState, action) => {
     switch(action.type) {
         case SET_POSTS:
             return {
