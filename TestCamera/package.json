@@ -13,7 +13,10 @@
     "react-native": "0.60.5",
     "react-native-camera": "^3.3.0",
     "react-native-fs": "^2.14.1",
+    "react-native-image-zoom-viewer": "^2.2.26",
+    "react-native-pinch-zoom-image": "0.0.8",
     "react-native-svg": "^9.7.0",
+    "react-native-transformable-image": "0.0.18",
     "react-native-vector-icons": "^6.6.0"
   },
   "devDependencies": {

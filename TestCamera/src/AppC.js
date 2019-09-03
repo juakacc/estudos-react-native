@@ -3,6 +3,7 @@ import {
     Dimensions, 
     StyleSheet, 
     View,
+    Image,
     TouchableOpacity,
     ToastAndroid,
 } from 'react-native'
@@ -10,21 +11,30 @@ import {RNCamera} from 'react-native-camera'
 import CameraRoll from "@react-native-community/cameraroll";
 import CameraMask from './CameraMask'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import image from '../assets/images/smartphone.png'
+import ImageViewer from 'react-native-image-zoom-viewer'
+
+// import Image from 'react-native-transformable-image'
 
 export default class AppC extends React.Component {
     render() {
+        const images = [{url: 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/sample_img.png',},];
         return (
             <View style={styles.container}>
                 <RNCamera
                     style={styles.camera}
                     ref={ref => {this.camera = ref;}}
+                    flashMode={RNCamera.Constants.FlashMode.on}
+                    autoFocus={RNCamera.Constants.AutoFocus.off}
                     type={RNCamera.Constants.Type.back} />
                 <CameraMask />
                 <View style={styles.cameraElements}>
                     <View style={{alignItems: 'center'}}>
-                        <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.buttom}>
+                        <ImageViewer imageUrls={images} />
+                        {/* <Image style={styles.smartphoneImage} source={{uri: 'https://raw.githubusercontent.com/yoaicom/resources/master/images/game_of_thrones_1.jpg'}} /> */}
+                        {/* <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.buttom}>
                             <Icon name="camera" size={40} color='#fff' />                
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                 </View>
             </View>
