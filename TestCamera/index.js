@@ -3,7 +3,7 @@
  */
 
 import {AppRegistry} from 'react-native';
-import AppC from './src/ImageViewer'
+import AppC from './src/MovendoAumentando'
 import {name as appName} from './app.json';
 
 AppRegistry.registerComponent(appName, () => AppC);
