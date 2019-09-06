@@ -36,8 +36,8 @@ export class ZoomableSvg extends Component {
     testeTop: 0, // remover depois
     testeLeft: 0,// remover depois
 
-    right: 0,
-    bottom: 0,
+    // right: 0,
+    // bottom: 0,
 
     viewBoxSize: 100,
     resolution: 0,
@@ -88,10 +88,11 @@ export class ZoomableSvg extends Component {
   }
 
   componentDidMount = () => {
-    const resolution = this.state.viewBoxSize / Math.min(this.props.height, this.props.width)
-    const fatorX = (this.props.x / resolution) / this.props.x
-    const fatorY = (this.props.y / resolution) / this.props.y
-    this.setState({resolution, fatorX, fatorY})
+    const { x, y, height, width } = this.props
+    const resolution = this.state.viewBoxSize / Math.min(height, width)
+    const fatorX = (x / resolution) / x
+    const fatorY = (y / resolution) / y
+    this.setState({ resolution, fatorX, fatorY })
   }
 
   // toque 1 (x1, y1) toque 2 (x2, y2)
@@ -118,8 +119,8 @@ export class ZoomableSvg extends Component {
         initialLeft,
         initialZoom,
         initialDistance,
-        fatorX,
-        fatorY
+        // fatorX,
+        // fatorY
       } = this.state
 
       const touchZoom = distance / initialDistance
@@ -130,10 +131,10 @@ export class ZoomableSvg extends Component {
       const top = (initialTop + deslocamentoY - y) * touchZoom + y
       const zoom = initialZoom * touchZoom
 
-      const right = left + (this.props.x * fatorX * zoom)
-      const bottom = top + (this.props.y * fatorY * zoom)
+      // const right = left + (this.props.x * fatorX * zoom)
+      // const bottom = top + (this.props.y * fatorY * zoom)
 
-      this.setState({ zoom, left, top, right, bottom })
+      this.setState({ zoom, left, top })
     }
   }
 
@@ -154,22 +155,26 @@ export class ZoomableSvg extends Component {
       const { initialX, initialY, initialLeft, initialTop, fatorX, fatorY, zoom } = this.state
       const dx = x - initialX
       const dy = y - initialY
-      
+
       const left = initialLeft + dx
       const top = initialTop + dy
-      const right = left + (this.props.x * fatorX * zoom)
-      const bottom = top + (this.props.y * fatorY * zoom)
+      // const right = left + (this.props.x * fatorX * zoom)
+      // const bottom = top + (this.props.y * fatorY * zoom)
 
-      this.setState({ left, top, right, bottom})
+      this.setState({ left, top })
     }
   }
 
   enviar = () => {
+
+    const right = left + (this.props.x * fatorX * zoom)
+    const bottom = top + (this.props.y * fatorY * zoom)
+
     const coordenadas = {
       left: Math.round(this.state.left),
       top: Math.round(this.state.top),
-      right: Math.round(this.state.right),
-      bottom: Math.round(this.state.bottom),
+      right: Math.round(right),
+      bottom: Math.round(bottom),
       zoom: this.state.zoom,
       mouseX: Math.round(this.state.testeLeft),
       mouseY: Math.round(this.state.testeTop),
@@ -178,36 +183,40 @@ export class ZoomableSvg extends Component {
   }
 
   render() {
-    const { height, width } = this.props
+    const { height, width, x, y } = this.props
     const { left, top, zoom, resolution } = this.state
-    const resolutiony = this.state.viewBoxSize / this.props.height
-    
+    // const resolutiony = this.state.viewBoxSize / this.props.height
+
     return (
       <View>
-        <View {...this._panResponder.panHandlers}>
+        <View {...this._panResponder.panHandlers} style={{ backgroundColor: 'blue' }}>
           <Svg
-            width={width}
-            height={height}
+          width='100%'
+          height='100%'
+            style={{backgroundColor:'red'}}
+            // width={width}
+            // height={height}
             viewBox="0 0 100 100"
-            preserveAspectRatio="xMinYMin meet">
-              <Defs>
-                    <Mask id="mask">
-                    <G
-                      transform={{
-                        translateX: left * resolution,
-                        translateY: top * resolutiony,
-                        scale: zoom,
-                      }}>
-                      <Rect x={0} y={0} height={this.props.y} width={this.props.x} fill='#fff' />
-                      <Rect x={1} y={1} height={this.props.y-2} width={this.props.x-2}/>
-                    </G>
-                    </Mask>
-                </Defs>
-                <Rect
-                    height={height}
-                    width={width}
-                    fill='#fff'
-                    mask="url(#mask)" />
+            preserveAspectRatio="none">
+            <Defs>
+              <Mask id="mask">
+                <G
+                  transform={{
+                    translateX: left * resolution,
+                    translateY: top * resolution,
+                    scale: zoom,
+                  }}>
+                  <Rect x={0} y={0} height={y} width={x} fill='#fff' />
+                  <Rect x={1} y={1} height={y - 2} width={x - 2} />
+                </G>
+              </Mask>
+            </Defs>
+            <Rect
+              height={height}
+              width={width}
+              fill='#000'
+              style={{backgroundColor:'green'}}
+              mask="url(#mask)" />
 
             {/* <G
               transform={{
@@ -215,8 +224,8 @@ export class ZoomableSvg extends Component {
                 translateY: top * resolution,
                 scale: zoom,
               }}>
-              <Rect x={0} y={0} height={this.props.y} width={this.props.x} fill='#fff' />
-              <Rect x={1} y={1} height={this.props.y-2} width={this.props.x-2}/>
+              <Rect x={0} y={0} height={y} width={x} fill='#fff' />
+              <Rect x={1} y={1} height={y-2} width={x-2}/>
             </G> */}
           </Svg>
         </View>
@@ -239,7 +248,7 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ZoomableSvg width={width} height={height} x={30} y={30}/>
+        <ZoomableSvg width={width} height={height} x={30} y={30} />
       </View>
     )
   }
