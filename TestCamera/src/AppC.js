@@ -18,11 +18,11 @@ export default class AppC extends React.Component {
                 <RNCamera
                     style={styles.camera}
                     ref={ref => {this.camera = ref;}}
-                    flashMode={RNCamera.Constants.FlashMode.on}
-                    autoFocus={RNCamera.Constants.AutoFocus.off}
+                    flashMode={RNCamera.Constants.FlashMode.auto}
+                    autoFocus={RNCamera.Constants.AutoFocus.on}
                     type={RNCamera.Constants.Type.back} />
-                <CameraMask />
-                <View style={styles.cameraElements}>
+                <CameraMask width={width} height={height} />
+                <View style={[styles.cameraElements, {backgroundColor: 'blue'}]}>
                     <View style={{alignItems: 'center'}}>
                         <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.buttom}>
                             <Icon name="camera" size={30} color='#fff' />                
@@ -45,6 +45,9 @@ export default class AppC extends React.Component {
     };
 }
 
+const width = Dimensions.get('window').width
+const height = Dimensions.get('window').height
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -55,20 +58,16 @@ const styles = StyleSheet.create({
     camera: {
         position: 'absolute',
         flex: 1,
-        width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height,
+        width: width,
+        height: height,
     },
     cameraElements: {
-        zIndex: 2,
+        zIndex: 1,
         position: 'absolute',
         bottom: 0,
         left: 0,
         right: 0,
         paddingHorizontal: 20
-    },
-    smartphoneImage: {
-        width: 50,
-        resizeMode: 'contain'
     },
     buttom: {
         marginBottom: 20,
