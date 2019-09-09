@@ -10,7 +10,7 @@ const CameraMask = props => {
     const viewBox = `0 0 ${width} ${height}`
 
     return (
-        <ZoomableSvg width={width} height={height} x={30} y={30}/>
+        <ZoomableSvg width={width} height={height} x={50} y={60}/>
         // <View aspectRatio={1}>
         //     <Svg 
         //         height={height} 

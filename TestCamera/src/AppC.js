@@ -22,7 +22,7 @@ export default class AppC extends React.Component {
                     autoFocus={RNCamera.Constants.AutoFocus.on}
                     type={RNCamera.Constants.Type.back} />
                 <CameraMask width={width} height={height} />
-                <View style={[styles.cameraElements, {backgroundColor: 'blue'}]}>
+                <View style={[styles.cameraElements]}>
                     <View style={{alignItems: 'center'}}>
                         <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.buttom}>
                             <Icon name="camera" size={30} color='#fff' />                
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20
     },
     buttom: {
-        marginBottom: 20,
+        marginBottom: 10,
         padding: 10,
         borderRadius: 10,
         backgroundColor: '#000'

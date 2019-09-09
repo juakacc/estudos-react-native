@@ -62,10 +62,10 @@ export class ZoomableSvg extends Component {
 
         if (length === 1) { // Apenas moveu
           const [{ locationX, locationY }] = touches
-          this.setState({
-            testeTop: Math.round(locationY),
-            testeLeft: Math.round(locationX)
-          })
+          // this.setState({
+          //   testeTop: Math.round(locationY),
+          //   testeLeft: Math.round(locationX)
+          // })
           this.processTouch(locationX, locationY)
 
         } else if (length === 2) { // Zoom
@@ -186,28 +186,26 @@ export class ZoomableSvg extends Component {
     const { height, width, x, y } = this.props
     const { left, top, zoom, resolution } = this.state
     // const resolutiony = this.state.viewBoxSize / this.props.height
+    const viewbox = `0 0 ${width/2} ${height/2}`
 
     return (
       <View>
-        <View {...this._panResponder.panHandlers} style={{ backgroundColor: 'blue' }}>
+        <View {...this._panResponder.panHandlers}>
           <Svg
-          width='100%'
-          height='100%'
-            style={{backgroundColor:'red'}}
-            // width={width}
-            // height={height}
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none">
+            width={width}
+            height={height}
+            viewBox={viewbox}
+            preserveAspectRatio="none"
+            >
             <Defs>
               <Mask id="mask">
                 <G
                   transform={{
-                    translateX: left * resolution,
-                    translateY: top * resolution,
+                    translateX: left,
+                    translateY: top,
                     scale: zoom,
                   }}>
-                  <Rect x={0} y={0} height={y} width={x} fill='#fff' />
-                  <Rect x={1} y={1} height={y - 2} width={x - 2} />
+                  <Rect x={width/2} y={height/2} height={100} width={100} fill='#000' strokeWidth="2" stroke="#fff"/>
                 </G>
               </Mask>
             </Defs>
