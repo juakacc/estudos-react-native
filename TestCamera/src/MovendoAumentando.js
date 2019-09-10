@@ -7,7 +7,7 @@ import {
   Alert,
   TouchableOpacity
 } from 'react-native'
-import Svg, { G, Rect, Mask, Defs } from 'react-native-svg'
+import Svg, { G, Rect, Mask, Defs, Use } from 'react-native-svg'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 function calcDistance(x1, y1, x2, y2) {
@@ -192,10 +192,12 @@ export class ZoomableSvg extends Component {
       <View>
         <View {...this._panResponder.panHandlers}>
           <Svg
+            // width="100%"
+            // height="100%"
             width={width}
             height={height}
-            viewBox={viewbox}
-            preserveAspectRatio="none"
+            // viewBox={viewbox}
+            // preserveAspectRatio="none"
             >
             <Defs>
               <Mask id="mask">
@@ -205,27 +207,29 @@ export class ZoomableSvg extends Component {
                     translateY: top,
                     scale: zoom,
                   }}>
-                  <Rect x={width/2} y={height/2} height={100} width={100} fill='#000' strokeWidth="2" stroke="#fff"/>
+                  <Rect x={20} y={20} height={100} width={100} fill='#000' strokeWidth="1" stroke="#fff"/>
                 </G>
               </Mask>
+              <Rect id="rec" height={height} width={width} fill="#000"/>
             </Defs>
-            <Rect
+            <Use href="#rec" mask="url(#mask)" />
+            {/* <Rect
               height={height}
               width={width}
               fill='#000'
-              style={{backgroundColor:'green'}}
-              mask="url(#mask)" />
-
-            {/* <G
-              transform={{
-                translateX: left * resolution,
-                translateY: top * resolution,
-                scale: zoom,
-              }}>
-              <Rect x={0} y={0} height={y} width={x} fill='#fff' />
-              <Rect x={1} y={1} height={y-2} width={x-2}/>
-            </G> */}
+              mask="url(#mask)" /> */}
           </Svg>
+          {/* <Svg width={width} height={height}>
+            <Rect
+              x="25"
+              y="25"
+              width="300"
+              height="550"
+              fill="rgb(0,0,255)"
+              strokeWidth="3"
+              stroke="rgb(0,0,0)"
+            />
+          </Svg> */}
         </View>
         {/* <View style={styles.cameraElements}>
           <View style={{ alignItems: 'center' }}>
