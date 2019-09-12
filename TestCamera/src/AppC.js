@@ -4,14 +4,28 @@ import {
     StyleSheet, 
     View,
     TouchableOpacity,
+    Alert,
     ToastAndroid,
 } from 'react-native'
 import {RNCamera} from 'react-native-camera'
 import CameraRoll from "@react-native-community/cameraroll";
-import CameraMask from './CameraMask'
+import { ZoomableSvg } from './MovendoAumentando'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 export default class AppC extends React.Component {
+
+    salvar = async coordenadas => {
+        if (this.camera) {
+            const data = await this.camera.takePictureAsync().then(data => {
+                ToastAndroid.show('Imagem salva na galeria', ToastAndroid.SHORT)
+                console.disableYellowBox = true
+                CameraRoll.saveToCameraRoll(data.uri, 'photo')
+            });
+            console.log(data.uri)
+        }
+        Alert.alert("Coordenadas", JSON.stringify(coordenadas))
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -21,28 +35,28 @@ export default class AppC extends React.Component {
                     flashMode={RNCamera.Constants.FlashMode.auto}
                     autoFocus={RNCamera.Constants.AutoFocus.on}
                     type={RNCamera.Constants.Type.back} />
-                <CameraMask width={width} height={height} />
-                <View style={[styles.cameraElements]}>
+                <ZoomableSvg width={width} height={height} x={100} y={50} onSave={this.salvar} />
+                {/* <View style={[styles.cameraElements]}>
                     <View style={{alignItems: 'center'}}>
                         <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.buttom}>
                             <Icon name="camera" size={30} color='#fff' />                
                         </TouchableOpacity>
                     </View>
-                </View>
+                </View> */}
             </View>
         )
     }
 
-    takePicture = async function() {
-        if (this.camera) {
-            const data = await this.camera.takePictureAsync().then(data => {
-                ToastAndroid.show('Imagem salva na galeria', ToastAndroid.SHORT);
-                console.disableYellowBox = true;
-                CameraRoll.saveToCameraRoll(data.uri, 'photo');
-            });
-            console.log(data.uri);
-        }
-    };
+    // takePicture = async function() {
+    //     if (this.camera) {
+    //         const data = await this.camera.takePictureAsync().then(data => {
+    //             ToastAndroid.show('Imagem salva na galeria', ToastAndroid.SHORT);
+    //             console.disableYellowBox = true;
+    //             CameraRoll.saveToCameraRoll(data.uri, 'photo');
+    //         });
+    //         console.log(data.uri);
+    //     }
+    // };
 }
 
 const width = Dimensions.get('window').width

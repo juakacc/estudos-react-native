@@ -14,10 +14,10 @@
     "react-native-camera": "^3.3.0",
     "react-native-fs": "^2.14.1",
     "react-native-image-zoom-viewer": "^2.2.26",
-    "react-native-pinch-zoom-image": "0.0.8",
     "react-native-svg": "^9.7.0",
     "react-native-transformable-image": "0.0.18",
-    "react-native-vector-icons": "^6.6.0"
+    "react-native-vector-icons": "^6.6.0",
+    "react-native-web": "^0.11.7"
   },
   "devDependencies": {
     "@babel/core": "7.5.5",
@@ -27,7 +27,8 @@
     "eslint": "6.2.2",
     "jest": "24.9.0",
     "metro-react-native-babel-preset": "0.54.1",
-    "react-test-renderer": "16.8.6"
+    "react-test-renderer": "16.8.6",
+    "zoomable-svg": "git+https://github.com/msand/zoomable-svg.git"
   },
   "jest": {
     "preset": "react-native"
